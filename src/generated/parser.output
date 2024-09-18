@@ -1,0 +1,1330 @@
+Terminais sem uso na gramática
+
+    VIRGULA
+    COLCHETEESQUERDO
+    COLCHETEDIREITO
+    FLOAT
+    UMINUS
+
+
+Estado 8 conflitos: 2 de deslocamento/redução
+
+
+Gramática
+
+    0 $accept: programa $end
+
+    1 $@1: %empty
+
+    2 $@2: %empty
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA
+
+    4 lista_declaracoes: lista_declaracoes declaracao_var
+    5                  | declaracao_var
+    6                  | %empty
+
+    7 declaracao_var: tipo IDENTIFICADOR PONTOEVIRGULA
+
+    8 tipo: VOID
+    9     | INT
+
+   10 lista_afirmacoes: lista_afirmacoes afirmacao
+   11                 | %empty
+
+   12 afirmacao: afirmacao_expressao
+   13          | afirmacao_selecao
+   14          | afirmacao_iterativa
+   15          | afirmacao_retorno
+   16          | afirmacao_gets
+   17          | afirmacao_puts
+
+   18 afirmacao_expressao: expressao PONTOEVIRGULA
+   19                    | PONTOEVIRGULA
+
+   20 $@3: %empty
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO THEN CHAVEESQUERDA $@3 lista_afirmacoes CHAVEDIREITA
+
+   22 $@4: %empty
+
+   23 $@5: %empty
+
+   24 $@6: %empty
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+   26 $@7: %empty
+
+   27 $@8: %empty
+
+   28 $@9: %empty
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA
+
+   30 afirmacao_retorno: RETURN PONTOEVIRGULA
+   31                  | RETURN expressao PONTOEVIRGULA
+
+   32 afirmacao_gets: GETS PARENTESEESQUERDO IDENTIFICADOR PARENTESEDIREITO PONTOEVIRGULA
+
+   33 afirmacao_puts: PUTS PARENTESEESQUERDO fator PARENTESEDIREITO PONTOEVIRGULA
+
+   34 expressao: IDENTIFICADOR ATRIBUICAO expressao
+   35          | expressao_simples
+
+   36 variavel: IDENTIFICADOR
+
+   37 expressao_simples: expressao_matematica MENOR expressao_matematica
+   38                  | expressao_matematica MENORIGUAL expressao_matematica
+   39                  | expressao_matematica MAIOR expressao_matematica
+   40                  | expressao_matematica MAIORIGUAL expressao_matematica
+   41                  | expressao_matematica IGUAL expressao_matematica
+   42                  | expressao_matematica DIFERENTE expressao_matematica
+   43                  | expressao_matematica
+
+   44 expressao_matematica: expressao_matematica ADICAO expressao_matematica
+   45                     | expressao_matematica SUBTRACAO expressao_matematica
+   46                     | expressao_matematica MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica DIVISAO expressao_matematica
+   48                     | fator
+
+   49 fator: NUMERO
+   50      | variavel
+   51      | PARENTESEESQUERDO expressao PARENTESEDIREITO
+
+
+Terminais, com as regras onde eles aparecem
+
+    $end (0) 0
+    error (256)
+    ATRIBUICAO (258) 34
+    ADICAO (259) 44
+    SUBTRACAO (260) 45
+    MULTIPLICACAO (261) 46
+    DIVISAO (262) 47
+    PONTOEVIRGULA (263) 7 18 19 30 31 32 33
+    VIRGULA (264)
+    PARENTESEESQUERDO (265) 3 21 25 29 32 33 51
+    PARENTESEDIREITO (266) 3 21 25 29 32 33 51
+    COLCHETEESQUERDO (267)
+    COLCHETEDIREITO (268)
+    CHAVEESQUERDA (269) 3 21 25 29
+    CHAVEDIREITA (270) 3 21 25 29
+    MENOR (271) 37
+    MENORIGUAL (272) 38
+    MAIOR (273) 39
+    MAIORIGUAL (274) 40
+    IGUAL (275) 41
+    DIFERENTE (276) 42
+    IF (277) 21 25
+    ELSE (278) 25
+    WHILE (279) 29
+    RETURN (280) 30 31
+    VOID (281) 3 8
+    INT (282) 3 9
+    FLOAT (283)
+    GETS (284) 32
+    PUTS (285) 33
+    MAIN (286) 3
+    THEN (287) 21
+    IDENTIFICADOR <cadeia> (288) 7 32 34 36
+    NUMERO <intval> (289) 49
+    UMINUS (290)
+
+
+Não terminais com as regras onde eles aparecem
+
+    $accept (36)
+        à esquerda: 0
+    programa (37)
+        à esquerda: 3
+        à direita: 0
+    $@1 (38)
+        à esquerda: 1
+        à direita: 3
+    $@2 (39)
+        à esquerda: 2
+        à direita: 3
+    lista_declaracoes (40)
+        à esquerda: 4 5 6
+        à direita: 3 4
+    declaracao_var (41)
+        à esquerda: 7
+        à direita: 4 5
+    tipo (42)
+        à esquerda: 8 9
+        à direita: 7
+    lista_afirmacoes (43)
+        à esquerda: 10 11
+        à direita: 3 10 21 25 29
+    afirmacao (44)
+        à esquerda: 12 13 14 15 16 17
+        à direita: 10
+    afirmacao_expressao (45)
+        à esquerda: 18 19
+        à direita: 12
+    afirmacao_selecao (46)
+        à esquerda: 21 25
+        à direita: 13
+    $@3 (47)
+        à esquerda: 20
+        à direita: 21
+    $@4 (48)
+        à esquerda: 22
+        à direita: 25
+    $@5 (49)
+        à esquerda: 23
+        à direita: 25
+    $@6 (50)
+        à esquerda: 24
+        à direita: 25
+    afirmacao_iterativa (51)
+        à esquerda: 29
+        à direita: 14
+    $@7 (52)
+        à esquerda: 26
+        à direita: 29
+    $@8 (53)
+        à esquerda: 27
+        à direita: 29
+    $@9 (54)
+        à esquerda: 28
+        à direita: 29
+    afirmacao_retorno (55)
+        à esquerda: 30 31
+        à direita: 15
+    afirmacao_gets (56)
+        à esquerda: 32
+        à direita: 16
+    afirmacao_puts (57)
+        à esquerda: 33
+        à direita: 17
+    expressao (58)
+        à esquerda: 34 35
+        à direita: 18 21 25 29 31 34 51
+    variavel <cadeia> (59)
+        à esquerda: 36
+        à direita: 50
+    expressao_simples (60)
+        à esquerda: 37 38 39 40 41 42 43
+        à direita: 35
+    expressao_matematica (61)
+        à esquerda: 44 45 46 47 48
+        à direita: 37 38 39 40 41 42 43 44 45 46 47
+    fator (62)
+        à esquerda: 49 50 51
+        à direita: 33 48
+
+
+Estado 0
+
+    0 $accept: . programa $end
+
+    INT  deslocar, e ir ao estado 1
+
+    programa  ir ao estado 2
+
+
+Estado 1
+
+    3 programa: INT . MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA
+
+    MAIN  deslocar, e ir ao estado 3
+
+
+Estado 2
+
+    0 $accept: programa . $end
+
+    $end  deslocar, e ir ao estado 4
+
+
+Estado 3
+
+    3 programa: INT MAIN . PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 5
+
+
+Estado 4
+
+    0 $accept: programa $end .
+
+    $padrão  aceitar
+
+
+Estado 5
+
+    3 programa: INT MAIN PARENTESEESQUERDO . VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA
+
+    VOID  deslocar, e ir ao estado 6
+
+
+Estado 6
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID . PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA
+
+    PARENTESEDIREITO  deslocar, e ir ao estado 7
+
+
+Estado 7
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO . CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA
+
+    CHAVEESQUERDA  deslocar, e ir ao estado 8
+
+
+Estado 8
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA . lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA
+
+    VOID  deslocar, e ir ao estado 9
+    INT   deslocar, e ir ao estado 10
+
+    VOID      [reduzir usando a regra 6 (lista_declaracoes)]
+    INT       [reduzir usando a regra 6 (lista_declaracoes)]
+    $padrão  reduzir usando a regra 6 (lista_declaracoes)
+
+    lista_declaracoes  ir ao estado 11
+    declaracao_var     ir ao estado 12
+    tipo               ir ao estado 13
+
+
+Estado 9
+
+    8 tipo: VOID .
+
+    $padrão  reduzir usando a regra 8 (tipo)
+
+
+Estado 10
+
+    9 tipo: INT .
+
+    $padrão  reduzir usando a regra 9 (tipo)
+
+
+Estado 11
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes . $@1 lista_afirmacoes $@2 CHAVEDIREITA
+    4 lista_declaracoes: lista_declaracoes . declaracao_var
+
+    VOID  deslocar, e ir ao estado 9
+    INT   deslocar, e ir ao estado 10
+
+    $padrão  reduzir usando a regra 1 ($@1)
+
+    $@1             ir ao estado 14
+    declaracao_var  ir ao estado 15
+    tipo            ir ao estado 13
+
+
+Estado 12
+
+    5 lista_declaracoes: declaracao_var .
+
+    $padrão  reduzir usando a regra 5 (lista_declaracoes)
+
+
+Estado 13
+
+    7 declaracao_var: tipo . IDENTIFICADOR PONTOEVIRGULA
+
+    IDENTIFICADOR  deslocar, e ir ao estado 16
+
+
+Estado 14
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 . lista_afirmacoes $@2 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 11 (lista_afirmacoes)
+
+    lista_afirmacoes  ir ao estado 17
+
+
+Estado 15
+
+    4 lista_declaracoes: lista_declaracoes declaracao_var .
+
+    $padrão  reduzir usando a regra 4 (lista_declaracoes)
+
+
+Estado 16
+
+    7 declaracao_var: tipo IDENTIFICADOR . PONTOEVIRGULA
+
+    PONTOEVIRGULA  deslocar, e ir ao estado 18
+
+
+Estado 17
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes . $@2 CHAVEDIREITA
+   10 lista_afirmacoes: lista_afirmacoes . afirmacao
+
+    PONTOEVIRGULA      deslocar, e ir ao estado 19
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IF                 deslocar, e ir ao estado 21
+    WHILE              deslocar, e ir ao estado 22
+    RETURN             deslocar, e ir ao estado 23
+    GETS               deslocar, e ir ao estado 24
+    PUTS               deslocar, e ir ao estado 25
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    $padrão  reduzir usando a regra 2 ($@2)
+
+    $@2                   ir ao estado 28
+    afirmacao             ir ao estado 29
+    afirmacao_expressao   ir ao estado 30
+    afirmacao_selecao     ir ao estado 31
+    afirmacao_iterativa   ir ao estado 32
+    afirmacao_retorno     ir ao estado 33
+    afirmacao_gets        ir ao estado 34
+    afirmacao_puts        ir ao estado 35
+    expressao             ir ao estado 36
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 18
+
+    7 declaracao_var: tipo IDENTIFICADOR PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 7 (declaracao_var)
+
+
+Estado 19
+
+   19 afirmacao_expressao: PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 19 (afirmacao_expressao)
+
+
+Estado 20
+
+   51 fator: PARENTESEESQUERDO . expressao PARENTESEDIREITO
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    expressao             ir ao estado 41
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 21
+
+   21 afirmacao_selecao: IF . PARENTESEESQUERDO expressao PARENTESEDIREITO THEN CHAVEESQUERDA $@3 lista_afirmacoes CHAVEDIREITA
+   25                  | IF . PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 42
+
+
+Estado 22
+
+   29 afirmacao_iterativa: WHILE . PARENTESEESQUERDO $@7 expressao $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 43
+
+
+Estado 23
+
+   30 afirmacao_retorno: RETURN . PONTOEVIRGULA
+   31                  | RETURN . expressao PONTOEVIRGULA
+
+    PONTOEVIRGULA      deslocar, e ir ao estado 44
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    expressao             ir ao estado 45
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 24
+
+   32 afirmacao_gets: GETS . PARENTESEESQUERDO IDENTIFICADOR PARENTESEDIREITO PONTOEVIRGULA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 46
+
+
+Estado 25
+
+   33 afirmacao_puts: PUTS . PARENTESEESQUERDO fator PARENTESEDIREITO PONTOEVIRGULA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 47
+
+
+Estado 26
+
+   34 expressao: IDENTIFICADOR . ATRIBUICAO expressao
+   36 variavel: IDENTIFICADOR .
+
+    ATRIBUICAO  deslocar, e ir ao estado 48
+
+    $padrão  reduzir usando a regra 36 (variavel)
+
+
+Estado 27
+
+   49 fator: NUMERO .
+
+    $padrão  reduzir usando a regra 49 (fator)
+
+
+Estado 28
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 . CHAVEDIREITA
+
+    CHAVEDIREITA  deslocar, e ir ao estado 49
+
+
+Estado 29
+
+   10 lista_afirmacoes: lista_afirmacoes afirmacao .
+
+    $padrão  reduzir usando a regra 10 (lista_afirmacoes)
+
+
+Estado 30
+
+   12 afirmacao: afirmacao_expressao .
+
+    $padrão  reduzir usando a regra 12 (afirmacao)
+
+
+Estado 31
+
+   13 afirmacao: afirmacao_selecao .
+
+    $padrão  reduzir usando a regra 13 (afirmacao)
+
+
+Estado 32
+
+   14 afirmacao: afirmacao_iterativa .
+
+    $padrão  reduzir usando a regra 14 (afirmacao)
+
+
+Estado 33
+
+   15 afirmacao: afirmacao_retorno .
+
+    $padrão  reduzir usando a regra 15 (afirmacao)
+
+
+Estado 34
+
+   16 afirmacao: afirmacao_gets .
+
+    $padrão  reduzir usando a regra 16 (afirmacao)
+
+
+Estado 35
+
+   17 afirmacao: afirmacao_puts .
+
+    $padrão  reduzir usando a regra 17 (afirmacao)
+
+
+Estado 36
+
+   18 afirmacao_expressao: expressao . PONTOEVIRGULA
+
+    PONTOEVIRGULA  deslocar, e ir ao estado 50
+
+
+Estado 37
+
+   50 fator: variavel .
+
+    $padrão  reduzir usando a regra 50 (fator)
+
+
+Estado 38
+
+   35 expressao: expressao_simples .
+
+    $padrão  reduzir usando a regra 35 (expressao)
+
+
+Estado 39
+
+   37 expressao_simples: expressao_matematica . MENOR expressao_matematica
+   38                  | expressao_matematica . MENORIGUAL expressao_matematica
+   39                  | expressao_matematica . MAIOR expressao_matematica
+   40                  | expressao_matematica . MAIORIGUAL expressao_matematica
+   41                  | expressao_matematica . IGUAL expressao_matematica
+   42                  | expressao_matematica . DIFERENTE expressao_matematica
+   43                  | expressao_matematica .
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    ADICAO         deslocar, e ir ao estado 51
+    SUBTRACAO      deslocar, e ir ao estado 52
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+    MENOR          deslocar, e ir ao estado 55
+    MENORIGUAL     deslocar, e ir ao estado 56
+    MAIOR          deslocar, e ir ao estado 57
+    MAIORIGUAL     deslocar, e ir ao estado 58
+    IGUAL          deslocar, e ir ao estado 59
+    DIFERENTE      deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 43 (expressao_simples)
+
+
+Estado 40
+
+   48 expressao_matematica: fator .
+
+    $padrão  reduzir usando a regra 48 (expressao_matematica)
+
+
+Estado 41
+
+   51 fator: PARENTESEESQUERDO expressao . PARENTESEDIREITO
+
+    PARENTESEDIREITO  deslocar, e ir ao estado 61
+
+
+Estado 42
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO . expressao PARENTESEDIREITO THEN CHAVEESQUERDA $@3 lista_afirmacoes CHAVEDIREITA
+   25                  | IF PARENTESEESQUERDO . expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    expressao             ir ao estado 62
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 43
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO . $@7 expressao $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 26 ($@7)
+
+    $@7  ir ao estado 63
+
+
+Estado 44
+
+   30 afirmacao_retorno: RETURN PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 30 (afirmacao_retorno)
+
+
+Estado 45
+
+   31 afirmacao_retorno: RETURN expressao . PONTOEVIRGULA
+
+    PONTOEVIRGULA  deslocar, e ir ao estado 64
+
+
+Estado 46
+
+   32 afirmacao_gets: GETS PARENTESEESQUERDO . IDENTIFICADOR PARENTESEDIREITO PONTOEVIRGULA
+
+    IDENTIFICADOR  deslocar, e ir ao estado 65
+
+
+Estado 47
+
+   33 afirmacao_puts: PUTS PARENTESEESQUERDO . fator PARENTESEDIREITO PONTOEVIRGULA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel  ir ao estado 37
+    fator     ir ao estado 67
+
+
+Estado 48
+
+   34 expressao: IDENTIFICADOR ATRIBUICAO . expressao
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    expressao             ir ao estado 68
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 49
+
+    3 programa: INT MAIN PARENTESEESQUERDO VOID PARENTESEDIREITO CHAVEESQUERDA lista_declaracoes $@1 lista_afirmacoes $@2 CHAVEDIREITA .
+
+    $padrão  reduzir usando a regra 3 (programa)
+
+
+Estado 50
+
+   18 afirmacao_expressao: expressao PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 18 (afirmacao_expressao)
+
+
+Estado 51
+
+   44 expressao_matematica: expressao_matematica ADICAO . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 69
+    fator                 ir ao estado 40
+
+
+Estado 52
+
+   45 expressao_matematica: expressao_matematica SUBTRACAO . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 70
+    fator                 ir ao estado 40
+
+
+Estado 53
+
+   46 expressao_matematica: expressao_matematica MULTIPLICACAO . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 71
+    fator                 ir ao estado 40
+
+
+Estado 54
+
+   47 expressao_matematica: expressao_matematica DIVISAO . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 72
+    fator                 ir ao estado 40
+
+
+Estado 55
+
+   37 expressao_simples: expressao_matematica MENOR . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 73
+    fator                 ir ao estado 40
+
+
+Estado 56
+
+   38 expressao_simples: expressao_matematica MENORIGUAL . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 74
+    fator                 ir ao estado 40
+
+
+Estado 57
+
+   39 expressao_simples: expressao_matematica MAIOR . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 75
+    fator                 ir ao estado 40
+
+
+Estado 58
+
+   40 expressao_simples: expressao_matematica MAIORIGUAL . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 76
+    fator                 ir ao estado 40
+
+
+Estado 59
+
+   41 expressao_simples: expressao_matematica IGUAL . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 77
+    fator                 ir ao estado 40
+
+
+Estado 60
+
+   42 expressao_simples: expressao_matematica DIFERENTE . expressao_matematica
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 66
+    NUMERO             deslocar, e ir ao estado 27
+
+    variavel              ir ao estado 37
+    expressao_matematica  ir ao estado 78
+    fator                 ir ao estado 40
+
+
+Estado 61
+
+   51 fator: PARENTESEESQUERDO expressao PARENTESEDIREITO .
+
+    $padrão  reduzir usando a regra 51 (fator)
+
+
+Estado 62
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao . PARENTESEDIREITO THEN CHAVEESQUERDA $@3 lista_afirmacoes CHAVEDIREITA
+   25                  | IF PARENTESEESQUERDO expressao . PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    PARENTESEDIREITO  deslocar, e ir ao estado 79
+
+
+Estado 63
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 . expressao $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA
+
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    expressao             ir ao estado 80
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 64
+
+   31 afirmacao_retorno: RETURN expressao PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 31 (afirmacao_retorno)
+
+
+Estado 65
+
+   32 afirmacao_gets: GETS PARENTESEESQUERDO IDENTIFICADOR . PARENTESEDIREITO PONTOEVIRGULA
+
+    PARENTESEDIREITO  deslocar, e ir ao estado 81
+
+
+Estado 66
+
+   36 variavel: IDENTIFICADOR .
+
+    $padrão  reduzir usando a regra 36 (variavel)
+
+
+Estado 67
+
+   33 afirmacao_puts: PUTS PARENTESEESQUERDO fator . PARENTESEDIREITO PONTOEVIRGULA
+
+    PARENTESEDIREITO  deslocar, e ir ao estado 82
+
+
+Estado 68
+
+   34 expressao: IDENTIFICADOR ATRIBUICAO expressao .
+
+    $padrão  reduzir usando a regra 34 (expressao)
+
+
+Estado 69
+
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   44                     | expressao_matematica ADICAO expressao_matematica .
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 44 (expressao_matematica)
+
+
+Estado 70
+
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   45                     | expressao_matematica SUBTRACAO expressao_matematica .
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 45 (expressao_matematica)
+
+
+Estado 71
+
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   46                     | expressao_matematica MULTIPLICACAO expressao_matematica .
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    $padrão  reduzir usando a regra 46 (expressao_matematica)
+
+
+Estado 72
+
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+   47                     | expressao_matematica DIVISAO expressao_matematica .
+
+    $padrão  reduzir usando a regra 47 (expressao_matematica)
+
+
+Estado 73
+
+   37 expressao_simples: expressao_matematica MENOR expressao_matematica .
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    ADICAO         deslocar, e ir ao estado 51
+    SUBTRACAO      deslocar, e ir ao estado 52
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 37 (expressao_simples)
+
+
+Estado 74
+
+   38 expressao_simples: expressao_matematica MENORIGUAL expressao_matematica .
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    ADICAO         deslocar, e ir ao estado 51
+    SUBTRACAO      deslocar, e ir ao estado 52
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 38 (expressao_simples)
+
+
+Estado 75
+
+   39 expressao_simples: expressao_matematica MAIOR expressao_matematica .
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    ADICAO         deslocar, e ir ao estado 51
+    SUBTRACAO      deslocar, e ir ao estado 52
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 39 (expressao_simples)
+
+
+Estado 76
+
+   40 expressao_simples: expressao_matematica MAIORIGUAL expressao_matematica .
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    ADICAO         deslocar, e ir ao estado 51
+    SUBTRACAO      deslocar, e ir ao estado 52
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 40 (expressao_simples)
+
+
+Estado 77
+
+   41 expressao_simples: expressao_matematica IGUAL expressao_matematica .
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    ADICAO         deslocar, e ir ao estado 51
+    SUBTRACAO      deslocar, e ir ao estado 52
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 41 (expressao_simples)
+
+
+Estado 78
+
+   42 expressao_simples: expressao_matematica DIFERENTE expressao_matematica .
+   44 expressao_matematica: expressao_matematica . ADICAO expressao_matematica
+   45                     | expressao_matematica . SUBTRACAO expressao_matematica
+   46                     | expressao_matematica . MULTIPLICACAO expressao_matematica
+   47                     | expressao_matematica . DIVISAO expressao_matematica
+
+    ADICAO         deslocar, e ir ao estado 51
+    SUBTRACAO      deslocar, e ir ao estado 52
+    MULTIPLICACAO  deslocar, e ir ao estado 53
+    DIVISAO        deslocar, e ir ao estado 54
+
+    $padrão  reduzir usando a regra 42 (expressao_simples)
+
+
+Estado 79
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO . THEN CHAVEESQUERDA $@3 lista_afirmacoes CHAVEDIREITA
+   25                  | IF PARENTESEESQUERDO expressao PARENTESEDIREITO . CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    CHAVEESQUERDA  deslocar, e ir ao estado 83
+    THEN           deslocar, e ir ao estado 84
+
+
+Estado 80
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao . $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 27 ($@8)
+
+    $@8  ir ao estado 85
+
+
+Estado 81
+
+   32 afirmacao_gets: GETS PARENTESEESQUERDO IDENTIFICADOR PARENTESEDIREITO . PONTOEVIRGULA
+
+    PONTOEVIRGULA  deslocar, e ir ao estado 86
+
+
+Estado 82
+
+   33 afirmacao_puts: PUTS PARENTESEESQUERDO fator PARENTESEDIREITO . PONTOEVIRGULA
+
+    PONTOEVIRGULA  deslocar, e ir ao estado 87
+
+
+Estado 83
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA . $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 22 ($@4)
+
+    $@4  ir ao estado 88
+
+
+Estado 84
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO THEN . CHAVEESQUERDA $@3 lista_afirmacoes CHAVEDIREITA
+
+    CHAVEESQUERDA  deslocar, e ir ao estado 89
+
+
+Estado 85
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao $@8 . PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA
+
+    PARENTESEDIREITO  deslocar, e ir ao estado 90
+
+
+Estado 86
+
+   32 afirmacao_gets: GETS PARENTESEESQUERDO IDENTIFICADOR PARENTESEDIREITO PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 32 (afirmacao_gets)
+
+
+Estado 87
+
+   33 afirmacao_puts: PUTS PARENTESEESQUERDO fator PARENTESEDIREITO PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 33 (afirmacao_puts)
+
+
+Estado 88
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 . lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 11 (lista_afirmacoes)
+
+    lista_afirmacoes  ir ao estado 91
+
+
+Estado 89
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO THEN CHAVEESQUERDA . $@3 lista_afirmacoes CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 20 ($@3)
+
+    $@3  ir ao estado 92
+
+
+Estado 90
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao $@8 PARENTESEDIREITO . CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA
+
+    CHAVEESQUERDA  deslocar, e ir ao estado 93
+
+
+Estado 91
+
+   10 lista_afirmacoes: lista_afirmacoes . afirmacao
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes . CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    PONTOEVIRGULA      deslocar, e ir ao estado 19
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    CHAVEDIREITA       deslocar, e ir ao estado 94
+    IF                 deslocar, e ir ao estado 21
+    WHILE              deslocar, e ir ao estado 22
+    RETURN             deslocar, e ir ao estado 23
+    GETS               deslocar, e ir ao estado 24
+    PUTS               deslocar, e ir ao estado 25
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    afirmacao             ir ao estado 29
+    afirmacao_expressao   ir ao estado 30
+    afirmacao_selecao     ir ao estado 31
+    afirmacao_iterativa   ir ao estado 32
+    afirmacao_retorno     ir ao estado 33
+    afirmacao_gets        ir ao estado 34
+    afirmacao_puts        ir ao estado 35
+    expressao             ir ao estado 36
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 92
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO THEN CHAVEESQUERDA $@3 . lista_afirmacoes CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 11 (lista_afirmacoes)
+
+    lista_afirmacoes  ir ao estado 95
+
+
+Estado 93
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao $@8 PARENTESEDIREITO CHAVEESQUERDA . lista_afirmacoes $@9 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 11 (lista_afirmacoes)
+
+    lista_afirmacoes  ir ao estado 96
+
+
+Estado 94
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA . ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    ELSE  deslocar, e ir ao estado 97
+
+
+Estado 95
+
+   10 lista_afirmacoes: lista_afirmacoes . afirmacao
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO THEN CHAVEESQUERDA $@3 lista_afirmacoes . CHAVEDIREITA
+
+    PONTOEVIRGULA      deslocar, e ir ao estado 19
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    CHAVEDIREITA       deslocar, e ir ao estado 98
+    IF                 deslocar, e ir ao estado 21
+    WHILE              deslocar, e ir ao estado 22
+    RETURN             deslocar, e ir ao estado 23
+    GETS               deslocar, e ir ao estado 24
+    PUTS               deslocar, e ir ao estado 25
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    afirmacao             ir ao estado 29
+    afirmacao_expressao   ir ao estado 30
+    afirmacao_selecao     ir ao estado 31
+    afirmacao_iterativa   ir ao estado 32
+    afirmacao_retorno     ir ao estado 33
+    afirmacao_gets        ir ao estado 34
+    afirmacao_puts        ir ao estado 35
+    expressao             ir ao estado 36
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 96
+
+   10 lista_afirmacoes: lista_afirmacoes . afirmacao
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes . $@9 CHAVEDIREITA
+
+    PONTOEVIRGULA      deslocar, e ir ao estado 19
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IF                 deslocar, e ir ao estado 21
+    WHILE              deslocar, e ir ao estado 22
+    RETURN             deslocar, e ir ao estado 23
+    GETS               deslocar, e ir ao estado 24
+    PUTS               deslocar, e ir ao estado 25
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    $padrão  reduzir usando a regra 28 ($@9)
+
+    afirmacao             ir ao estado 29
+    afirmacao_expressao   ir ao estado 30
+    afirmacao_selecao     ir ao estado 31
+    afirmacao_iterativa   ir ao estado 32
+    $@9                   ir ao estado 99
+    afirmacao_retorno     ir ao estado 33
+    afirmacao_gets        ir ao estado 34
+    afirmacao_puts        ir ao estado 35
+    expressao             ir ao estado 36
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 97
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE . CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    CHAVEESQUERDA  deslocar, e ir ao estado 100
+
+
+Estado 98
+
+   21 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO THEN CHAVEESQUERDA $@3 lista_afirmacoes CHAVEDIREITA .
+
+    $padrão  reduzir usando a regra 21 (afirmacao_selecao)
+
+
+Estado 99
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 . CHAVEDIREITA
+
+    CHAVEDIREITA  deslocar, e ir ao estado 101
+
+
+Estado 100
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA . $@5 lista_afirmacoes $@6 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 23 ($@5)
+
+    $@5  ir ao estado 102
+
+
+Estado 101
+
+   29 afirmacao_iterativa: WHILE PARENTESEESQUERDO $@7 expressao $@8 PARENTESEDIREITO CHAVEESQUERDA lista_afirmacoes $@9 CHAVEDIREITA .
+
+    $padrão  reduzir usando a regra 29 (afirmacao_iterativa)
+
+
+Estado 102
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 . lista_afirmacoes $@6 CHAVEDIREITA
+
+    $padrão  reduzir usando a regra 11 (lista_afirmacoes)
+
+    lista_afirmacoes  ir ao estado 103
+
+
+Estado 103
+
+   10 lista_afirmacoes: lista_afirmacoes . afirmacao
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes . $@6 CHAVEDIREITA
+
+    PONTOEVIRGULA      deslocar, e ir ao estado 19
+    PARENTESEESQUERDO  deslocar, e ir ao estado 20
+    IF                 deslocar, e ir ao estado 21
+    WHILE              deslocar, e ir ao estado 22
+    RETURN             deslocar, e ir ao estado 23
+    GETS               deslocar, e ir ao estado 24
+    PUTS               deslocar, e ir ao estado 25
+    IDENTIFICADOR      deslocar, e ir ao estado 26
+    NUMERO             deslocar, e ir ao estado 27
+
+    $padrão  reduzir usando a regra 24 ($@6)
+
+    afirmacao             ir ao estado 29
+    afirmacao_expressao   ir ao estado 30
+    afirmacao_selecao     ir ao estado 31
+    $@6                   ir ao estado 104
+    afirmacao_iterativa   ir ao estado 32
+    afirmacao_retorno     ir ao estado 33
+    afirmacao_gets        ir ao estado 34
+    afirmacao_puts        ir ao estado 35
+    expressao             ir ao estado 36
+    variavel              ir ao estado 37
+    expressao_simples     ir ao estado 38
+    expressao_matematica  ir ao estado 39
+    fator                 ir ao estado 40
+
+
+Estado 104
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 . CHAVEDIREITA
+
+    CHAVEDIREITA  deslocar, e ir ao estado 105
+
+
+Estado 105
+
+   25 afirmacao_selecao: IF PARENTESEESQUERDO expressao PARENTESEDIREITO CHAVEESQUERDA $@4 lista_afirmacoes CHAVEDIREITA ELSE CHAVEESQUERDA $@5 lista_afirmacoes $@6 CHAVEDIREITA .
+
+    $padrão  reduzir usando a regra 25 (afirmacao_selecao)
